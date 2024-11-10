@@ -52,7 +52,7 @@ function createPerformanceCalculator(aPerformance, aPlay) {
 
 class TragedyCalculator extends PerformanceCalculator {
   get amount() {
-    result = 40000;
+    let result = 40000;
     if (this.performances.audience > 30) {
       result += 1000 * (this.performances.audience - 30);
     }
@@ -60,7 +60,16 @@ class TragedyCalculator extends PerformanceCalculator {
   }
 }
 
-class ComedyCalculator extends PerformanceCalculator {}
+class ComedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 30000;
+    if (this.performances.audience > 20) {
+      result += 10000 + 500 * (this.performances.audience - 20);
+    }
+    result += 300 * this.performances.audience;
+    return result;
+  }
+}
 
 class PerformanceCalculator {
   constructor(aPerformance, aPlay) {
@@ -69,21 +78,7 @@ class PerformanceCalculator {
   }
 
   get amount() {
-    let result = 0;
-    switch (this.play.type) {
-      case "tragedy": // 비극
-        throw "오류 발생";
-      case "comedy": // 희극
-        result = 30000;
-        if (this.audience > 20) {
-          result += 10000 + 500 * (this.audience - 20);
-        }
-        result += 300 * this.audience;
-        break;
-      default:
-        throw new Error(`알 수 없는 장르: ${this.play.type}`);
-    }
-    return result;
+    throw new Error("서브 클래스에서 처리하도록 설계되었습니다.");
   }
 
   get volumeCredits() {
