@@ -14,7 +14,7 @@ export default function createStatementData(invoice, plays) {
     const result = Object.assign({}, aPerformance);
     result.play = playFor(result);
     result.amount = calculator.amount;
-    result.volumeCredits = volumeCreditsFor(result);
+    result.volumeCredits = calculator.volumeCredits;
     return result;
   }
 
@@ -64,6 +64,14 @@ class PerformanceCalculator {
       default:
         throw new Error(`알 수 없는 장르: ${this.play.type}`);
     }
+    return result;
+  }
+
+  get volumeCredits() {
+    let result = 0;
+    result += Math.max(this.performances.audience - 30, 0);
+    if ("comedy" === this.play.type)
+      result += Math.floor(this.performances.audience / 5);
     return result;
   }
 }
