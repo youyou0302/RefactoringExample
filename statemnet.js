@@ -9,10 +9,7 @@ function statement(invoice, plays) {
     }석}\n)`;
     totalAmount += amountFor(perf);
   }
-  let volumeCredits = 0;
-  for (let perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(pref);
-  }
+  let volumeCredits = totalAmountCredits();
 
   result += `총액: ${usd(totalAmount)}\n}`;
   result += `적립 포인트: ${volumeCredits}점\n`;
@@ -58,5 +55,13 @@ function statement(invoice, plays) {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(aNumber / 100);
+  }
+
+  function totalAmountCredits() {
+    let volumeCredits = 0;
+    for (let perf of invoice.performances) {
+      volumeCredits += volumeCreditsFor(pref);
+    }
+    return volumeCredits;
   }
 }
