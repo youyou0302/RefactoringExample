@@ -6,9 +6,8 @@ function statement(invoice, plays) {
       perf.audience
     }석}\n)`;
   }
-  let totalAmount = appleSauce();
 
-  result += `총액: ${usd(totalAmount)}\n}`;
+  result += `총액: ${usd(totalAmount())}\n}`;
   result += `적립 포인트: ${totalAmountCredits()}점\n`;
   return result;
 
@@ -54,19 +53,19 @@ function statement(invoice, plays) {
     }).format(aNumber / 100);
   }
 
-  function appleSauce() {
-    let totalAmount = 0;
+  function totalAmount() {
+    let result = 0;
     for (let perf of invoice.performances) {
-      totalAmount += amountFor(perf);
+      result += amountFor(perf);
     }
-    return totalAmount;
+    return result;
   }
 
   function totalAmountCredits() {
-    let volumeCredits = 0;
+    let result = 0;
     for (let perf of invoice.performances) {
-      volumeCredits += volumeCreditsFor(pref);
+      result += volumeCreditsFor(pref);
     }
-    return volumeCredits;
+    return result;
   }
 }
