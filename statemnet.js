@@ -1,4 +1,4 @@
-function statement(invoice, playus) {
+function statement(invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
   let result = `청구 내역 (고객명: ${invoice.customer})\n`;
@@ -9,7 +9,7 @@ function statement(invoice, playus) {
   }).format;
 
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
+    const play = playFor(perf);
     let thisAmount = amountFor(perf, play);
 
     // 포인트를 적립한다.
@@ -47,5 +47,9 @@ function statement(invoice, playus) {
         throw new Error(`알 수 없는 장르: ${play.type}`);
     }
     return result;
+  }
+
+  function playFor(aPerformance) {
+    return plays[aPerformance.playID];
   }
 }
